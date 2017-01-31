@@ -1,18 +1,25 @@
 class Map
-  MAP_WIDTH = 100
-  MAP_HEIGHT = 100
   TILE_SIZE = 32
+  attr_reader :id
+  attr_reader :name
   attr_accessor :objects
 
   def initialize
-    load_tiles
-    @map = generate_map
+    @id = 0
+    @name = ""
+    @tileset = ""
     @objects = []
   end
 
+  def setup(map_id)
+    @map_data = FileManager.load_map(map_id)
+    @id = @map_data[:id]
+    @name = @map_data[:name]
+    @tileset = @map_data[:tileset]
+    load_tiles
+  end
+
   def can_move_to?(x, y)
-    tile = tile_at(x, y)
-    tile
   end
 
   def draw(viewport)
@@ -32,13 +39,6 @@ class Map
   end
 
   private
-
-  def tile_at(x, y)
-    t_x = ((x / TILE_SIZE) % TILE_SIZE).floor
-    t_y = ((y / TILE_SIZE) % TILE_SIZE).floor
-    row = @map[t_x]
-    row[t_y] if row
-  end
 
   def load_tiles
     @tiles = Gosu::Image.load_tiles(FileManager.load('ground.png'), 32, 32, tileable: true)
