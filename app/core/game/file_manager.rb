@@ -3,7 +3,7 @@ require 'json'
 class FileManager
   class << self
     def path(file)
-      File.join(self.root_dir, 'data', file)
+      File.join(self.root_dir, 'resources', file)
     end
 
     def root_dir
