@@ -6,6 +6,8 @@ class Map
 
   def initialize
     @id = 0
+    @width = 20
+    @height = 15
     @name = ""
     @tileset = ""
     @objects = []
@@ -16,6 +18,7 @@ class Map
     @id = @map_data[:id]
     @name = @map_data[:name]
     @tileset = @map_data[:tileset]
+    @map = generate_map
     load_tiles
   end
 
@@ -25,14 +28,19 @@ class Map
   def draw(viewport)
     viewport.map! { |p| p / TILE_SIZE }
     x0, x1, y0, y1 = viewport.map(&:to_i)
-    (x0..x1).each do |x|
-      (y0..y1).each do |y|
-        row = @map[x]
-        if row
-          tile = @map[x][y]
-          map_x = x * TILE_SIZE
-          map_y = y * TILE_SIZE
-          tile.draw(map_x, map_y, 0) if tile
+    6.times do |p|
+      3.times do |z|
+        (x0..x1).each do |x|
+          (y0..y1).each do |y|
+            tile_id = @map[x][y][z]
+            # todo : tileset 정보 가지고 priority 맞는지 확인하기
+            if tile_id
+              tile = @map[x][y]
+              map_x = x * TILE_SIZE
+              map_y = y * TILE_SIZE
+              tile.draw(map_x, map_y, 0) if tile
+            end
+          end
         end
       end
     end
@@ -45,11 +53,15 @@ class Map
   end
 
   def generate_map
+    # todo : map_data 가지고 타일 아이디 넣어주기
     map = {}
-    MAP_WIDTH.times do |x|
+    @width.times do |x|
       map[x] = {}
-      MAP_HEIGHT.times do |y|
-        map[x][y] = choose_tile
+      @height.times do |y|
+        map[x][y] = {}
+        3.times do |z|
+          map[x][y][z] = 0
+        end
       end
     end
     map
