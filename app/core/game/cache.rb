@@ -7,6 +7,15 @@ class Cache
       @@cache[path]
     end
 
+    def load_json(path)
+      if @@cache.include? path
+        @@cache[path]
+      else
+        file = File.read(path)
+        @@cache = JSON.parse file
+      end
+    end
+
     def animation(file)
       path = FileManager.path("animations/#{file}")
       self.load_file(path) do
@@ -34,10 +43,12 @@ class Cache
     
     def map(map_id)
       path = FileManager.path(sprintf("maps/BMap%3d.map", map_id))
-      self.load_file(path) do
-        file = File.read(path)
-        @@cache = JSON.parse file
-      end
+      self.load_json(path)
+    end
+    
+    def tileset(map_id)
+      path = FileManager.path(sprintf("maps/BMap%3d.map", map_id))
+      self.load_json(path)
     end
   end
 end
