@@ -1,5 +1,6 @@
 class Component
   def initialize(object = nil)
+    @width, @height = 0
     self.object = object
   end
 
@@ -23,10 +24,10 @@ class Component
   end
 
   def x
-    @object.x
+    @object.x - (@width - @object.width) / 2
   end
 
-  def y
-    @object.y
+  def y  
+    @object.y - (@height - @object.height) / 2
   end
 end

@@ -1,5 +1,7 @@
 class Object
-  def initialize
+  def initialize(x, y)
+    @x, @y = x, y
+    @width, @height = 0
     @components = []
     ObjectPool.instance << self
   end

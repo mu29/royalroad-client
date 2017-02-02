@@ -1,18 +1,16 @@
-class Animation < GameObject
-  attr_accessor :x, :y
-
+class Animation < Component
   FRAME_DELAY = 16.66 # ms
 
-  def initialize(animation, object_pool, x, y)
-    super(object_pool)
-    @animation = Cache.animation(animation)
-    @x, @y = x, y
+  def initialize(object, file)
+    super(object)
+    @animation = Cache.animation(file)
+    @width = @animation[0].width
+    @height = @animation[0].height
     @current_frame = 0
   end
 
   def draw(viewport)
-    image = current_frame
-    image.draw(x - image.width / 2, y - image.height / 2, 0)
+    current_frame.draw(x, y, 0)
   end
 
   def update
