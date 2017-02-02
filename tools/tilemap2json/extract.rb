@@ -3,5 +3,6 @@
 $:.unshift Dir.pwd
 require "func.rb"
 
-tilesets2json(1)
-tilesets2json(2)
+3.times do |id|
+	tilemap2json(id+1)
+end
