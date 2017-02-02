@@ -14,7 +14,7 @@ class PlayScene < Scene
   end
 
   def draw
-
+    @map.draw([0, 800, 0, 600])
     return
     cam_x = @camera.x
     cam_y = @camera.y
