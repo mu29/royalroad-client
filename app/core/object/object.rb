@@ -1,8 +1,7 @@
-class GameObject
-  def initialize(object_pool)
+class Object
+  def initialize
     @components = []
-    @object_pool = object_pool
-    @object_pool.objects << self
+    ObjectPool.instance << self
   end
 
   def components
@@ -23,11 +22,5 @@ class GameObject
 
   def mark_for_removal
     @removable = true
-  end
-
-  protected
-
-  def object_pool
-    @object_pool
   end
 end

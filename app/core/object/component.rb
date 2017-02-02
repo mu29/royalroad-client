@@ -1,6 +1,6 @@
 class Component
-  def initialize(game_object = nil)
-    self.object = game_object
+  def initialize(object = nil)
+    self.object = object
   end
 
   def update
@@ -10,6 +10,10 @@ class Component
   end
 
   protected
+
+  def object
+    @object
+  end
 
   def object=(obj)
     if obj
@@ -24,9 +28,5 @@ class Component
 
   def y
     @object.y
-  end
-
-  def object
-    @object
   end
 end
