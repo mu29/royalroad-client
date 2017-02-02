@@ -28,7 +28,7 @@ def tilesets2json(id=1)
 	data = load_data("Data/Tilesets.rxdata")[id]
 	 h = 
 	 {
-	 	  "id" => data.id,
+	 	"id" => data.id,
 	    "name" => data.name.force_encoding("UTF-8"),
 	    "tileset_name" => data.tileset_name.force_encoding("UTF-8"),
 	    "autotile_names" => data.autotile_names.collect {|x| x = x.force_encoding("UTF-8") },

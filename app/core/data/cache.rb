@@ -40,7 +40,7 @@ class Cache
         @@cache[path] = Gosu::Image.load_tiles(path, 32, 32)
       end
     end
-    
+=begin
     def map(map_id)
       path = FileManager.path(sprintf("maps/BMap%3d.map", map_id))
       self.load_json(path)
@@ -50,5 +50,16 @@ class Cache
       path = FileManager.path(sprintf("maps/BMap%3d.map", map_id))
       self.load_json(path)
     end
+=end
+    def load_tileset_json(tileset_id)
+      path = FileManager.path(sprintf("tilesets/Tileset%03d.map", tileset_id))
+      Hash.symbolize(self.load_json(path))
+    end
+
+    def load_map_json(map_id)
+      path = FileManager.path(sprintf("maps/Map%03d.map", map_id))
+      Hash.symbolize(self.load_json(path))
+    end
+
   end
 end

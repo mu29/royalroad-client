@@ -1,16 +1,21 @@
 class PlayScene < Scene
   def initialize
+    p "Enter #{self}"
     @map = Map.new
-    @camera = Camera.new
+    @map.setup(1)
+    #@camera = Camera.new
+
     @object_pool = ObjectPool.instance
   end
 
   def update
     @object_pool.update
-    @camera.update
+    #@camera.update
   end
 
   def draw
+
+    return
     cam_x = @camera.x
     cam_y = @camera.y
     off_x =  $window.width / 2 - cam_x

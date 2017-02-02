@@ -1,6 +1,9 @@
 class Camera
   attr_accessor :x, :y, :zoom
 
+  def initialize
+  end
+
   def target=(target)
     @target = target
     @x, @y = target.x, target.y
