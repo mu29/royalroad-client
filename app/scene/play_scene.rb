@@ -1,13 +1,12 @@
-class MapScene < Scene
+class PlayScene < Scene
   def initialize
     @map = Map.new
     @camera = Camera.new
-    @object_pool = ObjectPool.new(@map)
+    @object_pool = ObjectPool.instance
   end
 
   def update
-    @object_pool.objects.map(&:update)
-    @object_pool.objects.reject!(&:removable?)
+    @object_pool.update
     @camera.update
   end
 
@@ -21,7 +20,7 @@ class MapScene < Scene
       zoom = @camera.zoom
       $window.scale(zoom, zoom, cam_x, cam_y) do
         @map.draw(viewport)
-        @object_pool.objects.map { |o| o.draw(viewport) }
+        @object_pool.draw(viewport)
       end
     end
   end

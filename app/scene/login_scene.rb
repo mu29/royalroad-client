@@ -13,8 +13,8 @@ class LoginScene < Scene
 
   def button_down(id)
     if id == Gosu::KbN
-      @map_scene = MapScene.new
-      Scene.switch(@map_scene)
+      @play_scene = PlayScene.new
+      Scene.switch(@play_scene)
     end
   end
 end
