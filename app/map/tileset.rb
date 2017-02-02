@@ -1,4 +1,7 @@
 class Tileset
+  attr_reader :image
+  attr_reader :priorities
+
 	def initialize(tileset_id)
 		begin
 			# /resources/tilesets/*.json
@@ -6,6 +9,7 @@ class Tileset
 			for key in hash_data.keys # key (Symbol)
 				instance_variable_set("@" + key.to_s, hash_data[key])
 			end
+			@image = Cache.tileset("#{@tileset_name}.png")
 		rescue Errno::ENOENT => e
 			p e
 			@id = 0
