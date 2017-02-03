@@ -6,9 +6,7 @@ class Tileset
 		begin
 			# /resources/tilesets/*.json
 			hash_data = Cache.load_tileset_json(tileset_id)
-			for key in hash_data.keys # key (Symbol)
-				instance_variable_set("@" + key.to_s, hash_data[key])
-			end
+			map_instance_variables(hash_data)
 			@image = Cache.tileset("#{@tileset_name}.png")
 		rescue Errno::ENOENT => e
 			p e
