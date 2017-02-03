@@ -41,7 +41,7 @@ class Cache
     def tileset(file)
       path = FileManager.path("tilesets/#{file}")
       self.load_file(path) do
-        @cache[path] = Gosu::Image.load_tiles(path, 32, 32)
+        @cache[path] = Gosu::Image.load_tiles(path, 32, 32, tileable: true)
       end
     end
 =begin
