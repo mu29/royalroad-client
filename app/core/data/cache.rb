@@ -1,5 +1,6 @@
 class Cache
   class << self
+    cattr_accessor: cache
     @@cache = {}
 
     def load_file(path)
@@ -12,7 +13,7 @@ class Cache
         @@cache[path]
       else
         file = File.read(path)
-        @@cache = JSON.parse file
+        @@cache[path] = Hash.symbolize(JSON.parse(file))
       end
     end
 
@@ -53,12 +54,12 @@ class Cache
 =end
     def load_tileset_json(tileset_id)
       path = FileManager.path(sprintf("tilesets/Tileset%03d.map", tileset_id))
-      Hash.symbolize(self.load_json(path))
+      self.load_json(path)
     end
 
     def load_map_json(map_id)
       path = FileManager.path(sprintf("maps/Map%03d.map", map_id))
-      Hash.symbolize(self.load_json(path))
+      self.load_json(path)
     end
 
   end
