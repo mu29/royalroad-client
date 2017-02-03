@@ -17,7 +17,7 @@ class Map
 
   def setup(map_id)
     # /resources/maps/Map*.json
-    @map_data = Cache.load_map_json(map_id)
+    @map_data = Cache.map_data(map_id)
     @id = @map_data[:id]
     @name = @map_data[:name]
     @tileset_id = @map_data[:tileset_id]

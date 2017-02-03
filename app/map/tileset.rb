@@ -2,10 +2,10 @@ class Tileset
   attr_reader :image
   attr_reader :priorities
 
-	def initialize(tileset_id)
+	def initialize(id)
 		begin
 			# /resources/tilesets/*.json
-			hash_data = Cache.load_tileset_json(tileset_id)
+			hash_data = Cache.tileset_data(id)
 			map_instance_variables(hash_data)
 			@image = Cache.tileset("#{@tileset_name}.png")
 		rescue Errno::ENOENT => e
@@ -48,5 +48,4 @@ class Tileset
 	attr_accessor :passages
 	attr_accessor :priorities
 	attr_accessor :terrain_tags
-
 end

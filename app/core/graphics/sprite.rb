@@ -11,8 +11,8 @@ class Sprite
 
   def load_cache(path:, rect: nil)
     path = FileManager.path(path)
-    @image = Cache.load_file(path) do
-      Cache.cache[path] = if rect.nil?
+    @image = Cache.load_image(path) do
+      Cache.image[path] = if rect.nil?
         Gosu::Image.new(path)
       else
         Gosu::Image.new(path, rect)
