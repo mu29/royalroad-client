@@ -1,6 +1,6 @@
 class LoginScene < Scene
   def initialize
-    @sprite = Sprite.new
+    @sprite = Sprite.new(x: 200, y: 100, width: 500, height: 500)
     @sprite.load_image(path: 'test.png')
   end
 
