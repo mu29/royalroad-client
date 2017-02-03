@@ -9,7 +9,7 @@ class Sprite
     @x, @y, @z = 0, 0, 0
   end
 
-  def load_image(path:, rect: nil)
+  def load_cache(path:, rect: nil)
     path = FileManager.path(path)
     @image = Cache.load_file(path) do
       Cache.cache[path] = if rect.nil?
@@ -17,6 +17,15 @@ class Sprite
       else
         Gosu::Image.new(path, rect)
       end
+    end
+  end
+
+  def load_image(path:, rect: nil)
+    path = FileManager.path(path)
+    @image = if rect.nil?
+      Gosu::Image.new(path)
+    else
+      Gosu::Image.new(path, rect)
     end
   end
 
