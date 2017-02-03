@@ -18,6 +18,8 @@ end
   require_relative f.gsub("#{root_dir}/", '')
 end
 
+Cache.init
+
 $window = Window.new
 Scene.switch(LoginScene.new)
 $window.show

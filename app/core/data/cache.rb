@@ -1,19 +1,22 @@
 class Cache
   class << self
-    cattr_accessor: cache
-    @@cache = {}
+    attr_accessor :cache
+
+    def init
+      @cache = {}
+    end
 
     def load_file(path)
-      yield unless @@cache.include? path
-      @@cache[path]
+      yield unless @cache.include? path
+      @cache[path]
     end
 
     def load_json(path)
-      if @@cache.include? path
-        @@cache[path]
+      if @cache.include? path
+        @cache[path]
       else
         file = File.read(path)
-        @@cache[path] = Hash.symbolize(JSON.parse(file))
+        @cache[path] = Hash.symbolize(JSON.parse(file))
       end
     end
 
@@ -22,7 +25,7 @@ class Cache
       self.load_file(path) do
         image = Gosu::Image.new(path)
         size = image.width / 5
-        @@cache[path] = Gosu::Image.load_tiles(path, size, size)
+        @cache[path] = Gosu::Image.load_tiles(path, size, size)
       end
     end
 
@@ -31,14 +34,14 @@ class Cache
       self.load_file(path) do
         image = Gosu::Image.new(path)
         size = image.width / 4
-        @@cache[path] = Gosu::Image.load_tiles(path, size, size)
+        @cache[path] = Gosu::Image.load_tiles(path, size, size)
       end
     end
 
     def tileset(file)
       path = FileManager.path("tilesets/#{file}")
       self.load_file(path) do
-        @@cache[path] = Gosu::Image.load_tiles(path, 32, 32)
+        @cache[path] = Gosu::Image.load_tiles(path, 32, 32)
       end
     end
 =begin
