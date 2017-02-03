@@ -1,5 +1,7 @@
 class LoginScene < Scene
   def initialize
+    @sprite = Sprite.new
+    @sprite.load_image(path: 'test.png')
   end
 
   def enter
@@ -9,6 +11,7 @@ class LoginScene < Scene
   end
 
   def draw
+    @sprite.draw
   end
 
   def button_down(id)

@@ -7,10 +7,10 @@ class Sprite
   def initialize(viewport = nil)
     viewport ||= Viewport.new
     self.viewport = viewport
-    x, y, z = 0
+    @x, @y, @z = 0, 0, 0
   end
 
-  def load_image(path:, rect:)
+  def load_image(path:, rect: nil)
     path = FileManager.path(path)
     @image = Cache.load_file(path) do
       Cache.cache[path] = if rect.nil?
@@ -22,7 +22,7 @@ class Sprite
   end
 
   def draw
-    @image.draw(x, y, z)
+    @image.draw(@x, @y, @z)
   end
 
   def width

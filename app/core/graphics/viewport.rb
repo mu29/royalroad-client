@@ -10,6 +10,6 @@ class Viewport
   end
 
   def rect
-    [x, y, width, height]
+    [@x, @y, @width, @height]
   end
 end
