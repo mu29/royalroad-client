@@ -1,7 +1,8 @@
 class LoginScene < Scene
   def initialize
-    @sprite = Sprite.new(x: 200, y: 100, width: 500, height: 500)
-    @sprite.load_image(path: 'test.png')
+    Audio.bgm_play("013-Theme02.ogg", 80, 120)
+    Audio.bgs_play("007-Rain03.ogg")
+    #Audio.bgm_fade
   end
 
   def enter
@@ -11,13 +12,18 @@ class LoginScene < Scene
   end
 
   def draw
-    @sprite.draw
   end
 
   def button_down(id)
-    if id == Gosu::KbN
+    case id
+    when Gosu::KbN
+      Audio.se_play("002-System02.ogg")
       @play_scene = PlayScene.new
       Scene.switch(@play_scene)
+    when Gosu::KbX
+      Audio.me_play("002-Victory02.wav")
+    when Gosu::KbZ
+      Audio.se_play("007-System07.ogg")
     end
   end
 end
