@@ -17,28 +17,20 @@ class Map
 
   def setup(map_id)
     # /resources/maps/Map*.json
-    @map_data = Cache.map_data(map_id)
-    @id = @map_data[:id]
-    @name = @map_data[:name]
-    @tileset_id = @map_data[:tileset_id]
+    map_data = Cache.map_data(map_id)
+    map_instance_variables(map_data)
     @tileset = Tileset.new(@tileset_id)
-    @autoplay_bgm = @map_data[:autoplay_bgm] # Boolean
-    @autoplay_bgs = @map_data[:autoplay_bgs] # Boolean
-    @width = @map_data[:width]
-    @height = @map_data[:height]
-    @data = @map_data[:data]
     # TODO sound
     #@bgm = @map_data[:bgm]
     #@bgs = @map_data[:bgs]
     @map = generate_map
-    load_tiles
   end
 
   def can_move_to?(x, y, d)
   end
 
   def draw(viewport)
-    viewport.map! { |p| p / TILE_SIZE }
+    viewport.map! { |v| v / TILE_SIZE }
     x0, x1, y0, y1 = viewport.map(&:to_i)
     6.times do |p|
       3.times do |z|
@@ -60,15 +52,6 @@ class Map
   end
 
   private
-
-  def load_tiles
-
-    @tiles = Gosu::Image.load_tiles(FileManager.path("tilesets/001-Grassland01.png"), 32, 32, tileable: true)
-    #.load_tiles(source, tile_width, tile_height, options = {}) ⇒ Array<Gosu::Image>
-    #@tiles = Gosu::Image.load_tiles(FileManager.path("tilesets/001-Grassland01.png"), 32, 32, tileable: true)
-    #@tiles[0].draw(0, 0, 1.0)
-    #p @tiles.size
-  end
 
   def generate_map
     # todo : map_data 가지고 타일 아이디 넣어주기
