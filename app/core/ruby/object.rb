@@ -4,4 +4,8 @@ class Object
       instance_variable_set("@#{k}", v) unless v.nil?
     end
   end
+
+  def presence?
+    !nil?
+  end
 end
