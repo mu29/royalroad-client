@@ -7,7 +7,7 @@ class Tileset
 			# /resources/tilesets/*.json
 			hash_data = Cache.tileset_data(id)
 			map_instance_variables(hash_data)
-			@image = Cache.tileset("#{@tileset_name}.png")
+			@image = Tile.new(Cache.tileset(@tileset_name))
 		rescue Errno::ENOENT => e
 			p e
 			@id = 0

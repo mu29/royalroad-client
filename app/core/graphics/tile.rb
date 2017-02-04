@@ -1,6 +1,6 @@
 class Tile
-  def initialize
-    @sprites = []
+  def initialize(source = nil)
+    @sprites = source
   end
 
   def [](id)

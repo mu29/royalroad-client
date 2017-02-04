@@ -22,7 +22,7 @@ class Cache
     end
 
     def animation(file)
-      path = FileManager.path("animations/#{file}")
+      path = FileManager.path("animations/#{file}.png")
       self.load_image(path) do
         image = Gosu::Image.new(path)
         size = image.width / 5
@@ -31,7 +31,7 @@ class Cache
     end
 
     def character(file)
-      path = FileManager.path("characters/#{file}")
+      path = FileManager.path("characters/#{file}.png")
       self.load_image(path) do
         image = Gosu::Image.new(path)
         size = image.width / 4
@@ -40,7 +40,7 @@ class Cache
     end
 
     def tileset(file)
-      path = FileManager.path("tilesets/#{file}")
+      path = FileManager.path("tilesets/#{file}.png")
       self.load_image(path) do
         @image[path] = Gosu::Image.load_tiles(path, 32, 32, tileable: true)
       end
