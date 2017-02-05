@@ -1,5 +1,8 @@
 module Game
   class Object
+    attr_accessor :x
+    attr_accessor :y
+
     def initialize(x, y)
       @x, @y = x, y
       @width, @height = 0

@@ -24,10 +24,10 @@ class Component
   end
 
   def x
-    @object.x - (@width - @object.width) / 2
+    @object.x
   end
 
   def y  
-    @object.y - (@height - @object.height) / 2
+    @object.y
   end
 end
