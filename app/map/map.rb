@@ -30,21 +30,18 @@ class Map
   end
 
   def draw(viewport)
-    viewport.map! { |v| v / TILE_SIZE }
-    x0, x1, y0, y1 = viewport.map(&:to_i)
+    x0, y0, x1, y1 = viewport.rect.map { |v| v / TILE_SIZE }
+    x1 = x0 + x1
+    y1 = y0 + y1
     6.times do |p|
       3.times do |z|
         (x0..x1).each do |x|
           (y0..y1).each do |y|
+            next unless valid?(x, y, z)
             tile_id = @map[x][y][z]
             next unless tile_id
             next if @tileset.priorities[tile_id] != p
-            tile_id -= 384
-            next if tile_id < 0
-            tile = @tileset.image[tile_id]
-            map_x = x * TILE_SIZE
-            map_y = y * TILE_SIZE
-            tile.draw(map_x, map_y, 0) if tile
+            tile_id < 384 ? draw_autotile(tile_id, x, y) : draw_tile(tile_id, x, y)
           end
         end
       end
@@ -54,7 +51,6 @@ class Map
   private
 
   def generate_map
-    # todo : map_data 가지고 타일 아이디 넣어주기
     map = {}
     @width.times do |x|
       map[x] = {}
@@ -67,5 +63,19 @@ class Map
     end
     map
   end
-end
 
+  def draw_tile(tile_id, x, y)
+    tile_id -= 384
+    tile = @tileset.image[tile_id]
+    map_x = x * TILE_SIZE
+    map_y = y * TILE_SIZE
+    tile.draw(map_x, map_y, 0) if tile
+  end
+
+  def draw_autotile(tile_id, x, y)
+  end
+
+  def valid?(x, y, z)
+    @map[x] && @map[x][y] && @map[x][y][z]
+  end
+end
