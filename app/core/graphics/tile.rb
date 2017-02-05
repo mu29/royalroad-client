@@ -7,12 +7,15 @@ class Tile
     @sprites[id]
   end
 
-  def load_image(path:, source:, size:)
-    if path.presence?
-      @sprites = Gosu::Image.load_tiles(path, size, size)
+  def load_image(path:, size: nil, width: nil, height: nil)
+    @sprites = if size.presence?
+      Gosu::Image.load_tiles(path, size, size, tileable: true)
+    else
+      Gosu::Image.load_tiles(path, width, height, tileable: true)
     end
-    if source.presence?
-      @sprites = source
-    end
+  end
+
+  def self.load_image(path:, size: nil, width: nil, height: nil)
+    Tile.new.tap { |t| t.load_image(path: path, size: size, width: width, height: height) }
   end
 end

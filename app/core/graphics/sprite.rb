@@ -4,21 +4,17 @@ class Sprite
   attr_accessor :z
   attr_accessor :viewport
 
-  def initialize(rect = nil)
-    @viewport = Viewport.new(rect)
+  def initialize(viewport = nil)
+    viewport ||= Viewport.new
+    @viewport = viewport
     @x, @y, @z = 0, 0, 0
   end
 
-  def load_image(path:, source:, rect: nil)
-    if path.presence?
-      @image = if rect.presence?
-        Gosu::Image.new(path, rect)
-      else
-        Gosu::Image.new(path)
-      end
-    end
-    if source.presence?
-      @image = source
+  def load_image(path:, rect: nil)
+    @image = if rect.presence?
+      Gosu::Image.new(path, rect)
+    else
+      Gosu::Image.new(path)
     end
   end
 
@@ -37,5 +33,9 @@ class Sprite
 
   def height
     @image&.height || 0
+  end
+
+  def self.load_image(path, rect = nil)
+    Sprite.new.tap { |s| s.load_image(path: path, rect: rect) }
   end
 end
