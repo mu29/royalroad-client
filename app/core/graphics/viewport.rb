@@ -5,10 +5,16 @@ class Viewport
   attr_accessor :width
   attr_accessor :height
 
-  def initialize(rect = nil)
-    @z = 0
-    rect ||= { x: 0, y: 0, width: Config::WINDOW_WIDTH, height: Config::WINDOW_HEIGHT }
-    map_instance_variables(rect)
+  def initialize(*args)
+    if args.size == 4
+      @x = args[0]
+      @y = args[1]
+      @width = args[2]
+      @height = args[3]
+    else
+      rect ||= { x: 0, y: 0, width: Config::WINDOW_WIDTH, height: Config::WINDOW_HEIGHT }
+      map_instance_variables(rect)
+    end
   end
 
   def rect
