@@ -18,7 +18,7 @@ class Viewport
   end
 
   def rect
-    [@x, @y, @width, @height]
+    [@x, @y, @width, @height].map!(&:to_i)
   end
 
   def include?(x, y, w, h)
