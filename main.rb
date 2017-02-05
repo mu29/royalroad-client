@@ -5,7 +5,7 @@ require_pattern = File.join(root_dir, '**/*.rb')
 @failed = []
 
 Dir.glob(require_pattern).each do |f|
-  next if f.include?(root_dir + "/tools") # except `tools` folder
+  next if f.include?("#{root_dir}/tools") # except `tools` folder
   next if f.end_with?('/main.rb')
   begin
     require_relative f.gsub("#{root_dir}/", '')
@@ -17,6 +17,8 @@ end
 @failed.each do |f|
   require_relative f.gsub("#{root_dir}/", '')
 end
+
+Cache.init
 
 $window = Window.new
 Scene.switch(LoginScene.new)

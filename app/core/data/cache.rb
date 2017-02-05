@@ -1,53 +1,59 @@
 class Cache
   class << self
-    @@cache = {}
+    attr_accessor :image
 
-    def load_file(path)
-      yield unless @@cache.include? path
-      @@cache[path]
+    def init
+      @image = {}
+      @data = {}
+    end
+
+    def load_image(path)
+      yield unless @image.include? path
+      @image[path]
     end
 
     def load_json(path)
-      if @@cache.include? path
-        @@cache[path]
+      if @data.include? path
+        @data[path]
       else
         file = File.read(path)
-        @@cache = JSON.parse file
+        @data[path] = Hash.symbolize(JSON.parse(file))
       end
     end
 
     def animation(file)
-      path = FileManager.path("animations/#{file}")
-      self.load_file(path) do
-        image = Gosu::Image.new(path)
+      path = FileManager.path("animations/#{file}.png")
+      self.load_image(path) do
+        image = Sprite.load_image(path)
         size = image.width / 5
-        @@cache[path] = Gosu::Image.load_tiles(path, size, size)
+        @image[path] = Tile.load_image(path: path, size: size)
       end
     end
 
     def character(file)
-      path = FileManager.path("characters/#{file}")
-      self.load_file(path) do
-        image = Gosu::Image.new(path)
-        size = image.width / 4
-        @@cache[path] = Gosu::Image.load_tiles(path, size, size)
+      path = FileManager.path("characters/#{file}.png")
+      self.load_image(path) do
+        image = Sprite.load_image(path)
+        width = image.width / 4
+        height = image.height / 4
+        @image[path] = Tile.load_image(path: path, width: width, height: height)
       end
     end
 
     def tileset(file)
-      path = FileManager.path("tilesets/#{file}")
-      self.load_file(path) do
-        @@cache[path] = Gosu::Image.load_tiles(path, 32, 32)
+      path = FileManager.path("tilesets/#{file}.png")
+      self.load_image(path) do
+        @image[path] = Tile.load_image(path: path, size: 32)
       end
     end
-    
-    def map(map_id)
-      path = FileManager.path(sprintf("maps/BMap%3d.map", map_id))
+
+    def tileset_data(tileset_id)
+      path = FileManager.path(sprintf("tilesets/Tileset%03d.map", tileset_id))
       self.load_json(path)
     end
-    
-    def tileset(map_id)
-      path = FileManager.path(sprintf("maps/BMap%3d.map", map_id))
+
+    def map_data(map_id)
+      path = FileManager.path(sprintf("maps/Map%03d.map", map_id))
       self.load_json(path)
     end
   end

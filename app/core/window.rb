@@ -2,7 +2,7 @@ class Window < Gosu::Window
   attr_accessor :scene
 
   def initialize
-    super(800, 600, false)
+    super(Config::WINDOW_WIDTH, Config::WINDOW_HEIGHT, false)
   end
 
   def update
