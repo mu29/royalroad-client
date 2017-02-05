@@ -1,26 +1,22 @@
 class ObjectPool
-  attr_accessor :objects
+  class << self
+    attr_accessor :objects
 
-  @@instance = nil
+    def init
+      @objects = []
+    end
 
-  def self.instance
-    @@instance ||= ObjectPool.new
+    def update
+      @objects.reject!(&:removable?)
+      @objects.map(&:update)
+    end
+
+    def draw(viewport)
+      @objects.each { |o| o.draw(viewport) }
+    end
+
+    def << (value)
+      @objects << value
+    end
   end
-
-  def initialize
-    @objects = []
-  end
-
-  def update
-    @objects.reject!(&:removable?)
-    @objects.map(&:update)
-  end
-
-  def draw(viewport)
-    @objects.each { |o| o.draw(viewport) }
-  end
-
-  def << (value)
-    @objects << value
-  end 
 end
