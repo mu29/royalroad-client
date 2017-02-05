@@ -7,7 +7,7 @@ module Game
       @x, @y = x, y
       @width, @height = 0
       @components = []
-      ObjectPool.instance << self
+      ObjectPool << self
     end
 
     def components
@@ -28,6 +28,12 @@ module Game
 
     def mark_for_removal
       @removable = true
+    end
+
+    def move(new_x, new_y)
+      return if new_x == @x && new_y == @y
+      @x = new_x
+      @y = new_y
     end
   end
 end
