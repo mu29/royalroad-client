@@ -1,10 +1,9 @@
 class PlayScene < Scene
   def initialize
-    p "Enter #{self}"
+    @viewport = Viewport.new(0, 0, 1024, 768)
     @map = Map.new
     @map.setup(1)
     #@camera = Camera.new
-
     @object_pool = ObjectPool.instance
   end
 
@@ -14,7 +13,7 @@ class PlayScene < Scene
   end
 
   def draw
-    @map.draw([0, 800, 0, 600])
+    @map.draw(@viewport)
     return
     cam_x = @camera.x
     cam_y = @camera.y
