@@ -1,38 +1,56 @@
 class Camera
-  attr_accessor :x, :y, :zoom
+  attr_reader :viewport, :x, :y
 
   def target=(target)
     @target = target
-    @x, @y = target.x, target.y
-    @zoom = 1
+    @x = target.x
+    @y = target.y
+    @viewport = Viewport.new(
+      @x - $window.width / 2,
+      @y - $window.height / 2,
+      $window.width,
+      $window.height
+    )
   end
 
   def mouse_coords
     x, y = target_delta_on_screen
     mouse_x_on_map = @target.x +
-      (x + $window.mouse_x - ($window.width / 2)) / @zoom
+      x + $window.mouse_x - ($window.width / 2)
     mouse_y_on_map = @target.y +
-      (y + $window.mouse_y - ($window.height / 2)) / @zoom
+      y + $window.mouse_y - ($window.height / 2)
     [mouse_x_on_map, mouse_y_on_map].map(&:round)
   end
 
   def update
     shift = FrameManager.adjust_speed(@target.physics.speed)
-    @x += shift if @x < @target.x - $window.width / 4
-    @x -= shift if @x > @target.x + $window.width / 4
-    @y += shift if @y < @target.y - $window.height / 4
-    @y -= shift if @y > @target.y + $window.height / 4
+    scroll_right(shift) if @x < @target.x
+    scroll_left(shift) if @x > @target.x
+    scroll_down(shift) if @y < @target.y
+    scroll_up(shift) if @y > @target.y
   end
 
   def target_delta_on_screen
-    [(@x - @target.x) * @zoom, (@y - @target.y) * @zoom]
+    [(@x - @target.x), (@y - @target.y)]
   end
 
-  def viewport
-    x0 = @x - ($window.width / 2)  / @zoom
-    x1 = @x + ($window.width / 2)  / @zoom
-    y0 = @y - ($window.height / 2) / @zoom
-    y1 = @y + ($window.height / 2) / @zoom
-    [x0, x1, y0, y1]
+  def scroll_left(shift)
+    @x -= shift
+    @viewport.x -= shift
+  end
+
+  def scroll_right(shift)
+    @x += shift
+    @viewport.x += shift
+  end
+
+  def scroll_up(shift)
+    @y -= shift
+    @viewport.y -= shift
+  end
+
+  def scroll_down(shift)
+    @y += shift
+    @viewport.y += shift
   end
 end
