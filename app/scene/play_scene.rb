@@ -1,31 +1,37 @@
 class PlayScene < Scene
   def initialize
+    Map.setup(1)
     @viewport = Viewport.new(0, 0, 1024, 768)
-    @map = Map.new
-    @map.setup(1)
-    #@camera = Camera.new
-    @object_pool = ObjectPool.instance
+    @c = Character.new(0, 0)
+    @count = 0
+    @camera = Camera.new
+    @camera.target = @c
   end
 
   def update
-    @object_pool.update
-    #@camera.update
+    ObjectPool.update
+    @count += 1
+    if @count % 800 == 0
+      @c.physics.move_up
+    elsif @count % 600 == 0
+      @c.physics.move_right
+    elsif @count % 400 == 0
+      @c.physics.move_left
+    elsif @count % 200 == 0
+      @c.physics.move_down
+    end
+    @camera.update
   end
 
   def draw
-    @map.draw(@viewport)
-    return
     cam_x = @camera.x
     cam_y = @camera.y
     off_x =  $window.width / 2 - cam_x
     off_y =  $window.height / 2 - cam_y
     viewport = @camera.viewport
     $window.translate(off_x, off_y) do
-      zoom = @camera.zoom
-      $window.scale(zoom, zoom, cam_x, cam_y) do
-        @map.draw(viewport)
-        @object_pool.draw(viewport)
-      end
+      Map.draw(viewport)
+      ObjectPool.draw(viewport)
     end
   end
 

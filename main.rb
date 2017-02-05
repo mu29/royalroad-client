@@ -19,6 +19,8 @@ end
 end
 
 Cache.init
+ObjectPool.init
+Map.init
 
 $window = Window.new
 Scene.switch(LoginScene.new)
