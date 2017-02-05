@@ -14,4 +14,11 @@ class Viewport
   def rect
     [@x, @y, @width, @height]
   end
+
+  def include?(x, y, w, h)
+    x < @x + @width &&
+    x + w > @x &&
+    y < @y + @height &&
+    y + h > @y
+  end
 end
