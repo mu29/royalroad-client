@@ -1,4 +1,5 @@
 require 'gosu'
+require 'socket'
 
 root_dir = File.dirname(__FILE__)
 require_pattern = File.join(root_dir, '**/*.rb')
@@ -21,5 +22,6 @@ end
 Cache.init
 
 $window = Window.new
+
 Scene.switch(LoginScene.new)
 $window.show
