@@ -1,5 +1,6 @@
 require 'gosu'
 require 'socket'
+require 'oily_png'
 
 root_dir = File.dirname(__FILE__)
 require_pattern = File.join(root_dir, '**/*.rb')

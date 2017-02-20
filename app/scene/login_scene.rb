@@ -1,6 +1,6 @@
 class LoginScene < Scene
   def initialize
-    Audio.bgm_play("013-Theme02.ogg", 100)
+    #Audio.bgm_play("013-Theme02.ogg", 100)
     Server.init
   end
 
@@ -27,7 +27,8 @@ class LoginScene < Scene
       @play_scene = PlayScene.new
       Scene.switch(@play_scene)
     when Gosu::KbX
-      Audio.me_play("002-Victory02.wav")
+      Audio.bgm_fade(40)
+      #Audio.me_play("002-Victory02.wav")
     end
   end
 end

@@ -20,7 +20,7 @@ class Sprite
     end
   end
 
-  def load_image(path:, rect: nil)
+  def load_image(path, rect=nil)
     path = FileManager.path(path)
     @image = if rect.nil?
       Gosu::Image.new(path)

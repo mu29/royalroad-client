@@ -1,5 +1,7 @@
 module Config
 
+	SERVER = ['127.0.0.1', 50000]
+
   WINDOW_WIDTH = 1024
   WINDOW_HEIGHT = 768
 
